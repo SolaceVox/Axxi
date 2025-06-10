@@ -38,6 +38,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <Meta />
         <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('theme') || 
+                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch (e) {
+                // Fallback for SSR or localStorage issues
+              }
+            `,
+          }}
+        />
       </head>
       <body className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
         {children}
