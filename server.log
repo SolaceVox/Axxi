@@ -97,3 +97,27 @@ Port 5173 is in use, trying another one...
       at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
       at Socket.Readable.push (node:internal/streams/readable:392:5)
       at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+4:31:33 AM [vite] Internal server error: Transform failed with 1 error:
+/app/app/routes/_index.tsx:230:6: ERROR: The symbol "features" has already been declared
+  Plugin: vite:esbuild
+  File: /app/app/routes/_index.tsx:230:6
+  
+  The symbol "features" has already been declared
+  228|  ];
+  229|  
+  230|  const features = [
+     |        ^
+  231|    {
+  232|      icon: "🎯",
+  
+      at failureErrorWithLog (/app/node_modules/vite/node_modules/esbuild/lib/main.js:1472:15)
+      at /app/node_modules/vite/node_modules/esbuild/lib/main.js:755:50
+      at responseCallbacks.<computed> (/app/node_modules/vite/node_modules/esbuild/lib/main.js:622:9)
+      at handleIncomingPacket (/app/node_modules/vite/node_modules/esbuild/lib/main.js:677:12)
+      at Socket.readFromStdout (/app/node_modules/vite/node_modules/esbuild/lib/main.js:600:7)
+      at Socket.emit (node:events:524:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Socket.Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+4:31:42 AM [vite] page reload app/routes/_index.tsx
