@@ -26,7 +26,7 @@ def main():
         
         # Check for key elements
         elements_to_check = [
-            ("🚀 Axxi Interactive App", "Page title"),
+            ("Axxi Interactive App", "Page title"),
             ("Counter Functions", "Counter section"),
             ("Interactive Controls", "Controls section"),
             ("Welcome to Axxi!", "Initial status message"),
