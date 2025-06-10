@@ -11,8 +11,18 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState("Welcome to Axxi!");
-  const [color, setColor] = useState("blue");
+  const [colorTheme, setColorTheme] = useState(0);
   const [showModal, setShowModal] = useState(false);
+
+  const themes = [
+    { name: "Blue", bg: "bg-blue-100 dark:bg-blue-900", text: "text-blue-800 dark:text-blue-200", button: "bg-blue-500 hover:bg-blue-600", counter: "text-blue-600 dark:text-blue-400", border: "border-blue-200 dark:border-blue-700" },
+    { name: "Green", bg: "bg-green-100 dark:bg-green-900", text: "text-green-800 dark:text-green-200", button: "bg-green-500 hover:bg-green-600", counter: "text-green-600 dark:text-green-400", border: "border-green-200 dark:border-green-700" },
+    { name: "Purple", bg: "bg-purple-100 dark:bg-purple-900", text: "text-purple-800 dark:text-purple-200", button: "bg-purple-500 hover:bg-purple-600", counter: "text-purple-600 dark:text-purple-400", border: "border-purple-200 dark:border-purple-700" },
+    { name: "Red", bg: "bg-red-100 dark:bg-red-900", text: "text-red-800 dark:text-red-200", button: "bg-red-500 hover:bg-red-600", counter: "text-red-600 dark:text-red-400", border: "border-red-200 dark:border-red-700" },
+    { name: "Indigo", bg: "bg-indigo-100 dark:bg-indigo-900", text: "text-indigo-800 dark:text-indigo-200", button: "bg-indigo-500 hover:bg-indigo-600", counter: "text-indigo-600 dark:text-indigo-400", border: "border-indigo-200 dark:border-indigo-700" },
+  ];
+
+  const currentTheme = themes[colorTheme];
 
   const handleIncrement = () => {
     setCount(prev => prev + 1);
@@ -30,11 +40,9 @@ export default function Index() {
   };
 
   const changeColor = () => {
-    const colors = ["blue", "green", "purple", "red", "yellow", "indigo"];
-    const currentIndex = colors.indexOf(color);
-    const nextIndex = (currentIndex + 1) % colors.length;
-    setColor(colors[nextIndex]);
-    setMessage(`Color changed to ${colors[nextIndex]}!`);
+    const nextTheme = (colorTheme + 1) % themes.length;
+    setColorTheme(nextTheme);
+    setMessage(`Color changed to ${themes[nextTheme].name}!`);
   };
 
   const openModal = () => {
@@ -60,8 +68,8 @@ export default function Index() {
         </header>
 
         {/* Status Message */}
-        <div className={`text-center mb-8 p-4 rounded-lg bg-${color}-100 dark:bg-${color}-900 border border-${color}-200 dark:border-${color}-700`}>
-          <p className={`text-lg font-medium text-${color}-800 dark:text-${color}-200`}>
+        <div className={`text-center mb-8 p-4 rounded-lg border ${currentTheme.bg} ${currentTheme.border}`}>
+          <p className={`text-lg font-medium ${currentTheme.text}`}>
             {message}
           </p>
         </div>
@@ -76,7 +84,7 @@ export default function Index() {
             </h2>
             
             <div className="text-center mb-6">
-              <div className={`text-6xl font-bold text-${color}-600 dark:text-${color}-400 mb-4`}>
+              <div className={`text-6xl font-bold mb-4 ${currentTheme.counter}`}>
                 {count}
               </div>
             </div>
@@ -114,7 +122,7 @@ export default function Index() {
             <div className="space-y-4">
               <button
                 onClick={changeColor}
-                className={`w-full px-6 py-4 bg-${color}-500 hover:bg-${color}-600 text-white font-semibold rounded-lg shadow-md transition-all duration-200 transform hover:scale-105`}
+                className={`w-full px-6 py-4 text-white font-semibold rounded-lg shadow-md transition-all duration-200 transform hover:scale-105 ${currentTheme.button}`}
               >
                 🎨 Change Theme Color
               </button>
@@ -184,7 +192,7 @@ export default function Index() {
                   setMessage("Modal button clicked! 🎯");
                   closeModal();
                 }}
-                className={`px-6 py-2 bg-${color}-500 hover:bg-${color}-600 text-white font-semibold rounded-lg transition-colors`}
+                className={`px-6 py-2 text-white font-semibold rounded-lg transition-colors ${currentTheme.button}`}
               >
                 Action
               </button>
