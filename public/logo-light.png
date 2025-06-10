@@ -1,0 +1,7 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="60" rx="8" fill="#f8fafc"/>
+  <circle cx="30" cy="30" r="12" fill="#3b82f6"/>
+  <text x="55" y="38" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#1e293b">
+    Your Logo
+  </text>
+</svg>
