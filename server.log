@@ -1,0 +1,16 @@
+
+> dev
+> remix vite:dev
+
+[warn] Route discovery/manifest behavior is changing in React Router v7
+┃ You can use the `v3_lazyRouteDiscovery` future flag to opt-in early.
+┃ -> https://remix.run/docs/en/2.13.1/start/future-flags#v3_lazyRouteDiscovery
+┗
+[warn] Data fetching is changing to a single fetch in React Router v7
+┃ You can use the `v3_singleFetch` future flag to opt-in early.
+┃ -> https://remix.run/docs/en/2.13.1/start/future-flags#v3_singleFetch
+┗
+Port 5173 is in use, trying another one...
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: use --host to expose
+4:20:36 AM [vite] page reload app/routes/_index.tsx
