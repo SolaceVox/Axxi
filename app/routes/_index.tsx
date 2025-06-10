@@ -1,50 +1,25 @@
 import type { MetaFunction } from "@remix-run/node";
+import { useState, useEffect } from "react";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Modern Remix Application" },
+    { name: "description", content: "A modern, secure Remix application with TypeScript and Tailwind CSS" },
   ];
 };
 
-export default function Index() {
-  return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="flex flex-col items-center gap-16">
-        <header className="flex flex-col items-center gap-9">
-          <h1 className="leading text-2xl font-bold text-gray-800 dark:text-gray-100">
-            Welcome to <span className="text-blue-600 dark:text-blue-400">Remix</span>
-          </h1>
-        </header>
-        <nav className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-gray-200 p-6 dark:border-gray-700">
-          <p className="leading-6 text-gray-700 dark:text-gray-200">
-            What&apos;s next?
-          </p>
-          <ul>
-            {resources.map(({ href, text, icon }) => (
-              <li key={href}>
-                <a
-                  className="group flex items-center gap-3 self-stretch p-3 leading-normal text-blue-700 hover:underline dark:text-blue-500"
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {icon}
-                  {text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-    </div>
-  );
+interface Resource {
+  href: string;
+  text: string;
+  icon: React.ReactNode;
+  description: string;
 }
 
-const resources = [
+const resources: Resource[] = [
   {
     href: "https://remix.run/start/quickstart",
-    text: "Quick Start (5 min)",
+    text: "Quick Start Guide",
+    description: "Get up and running with Remix in 5 minutes",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +40,8 @@ const resources = [
   },
   {
     href: "https://remix.run/start/tutorial",
-    text: "Tutorial (30 min)",
+    text: "Complete Tutorial",
+    description: "Learn Remix fundamentals with a hands-on tutorial",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +62,8 @@ const resources = [
   },
   {
     href: "https://remix.run/docs",
-    text: "Remix Docs",
+    text: "Documentation",
+    description: "Comprehensive guides and API reference",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +83,8 @@ const resources = [
   },
   {
     href: "https://rmx.as/discord",
-    text: "Join Discord",
+    text: "Join Community",
+    description: "Connect with other Remix developers",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -124,3 +102,153 @@ const resources = [
     ),
   },
 ];
+
+function ThemeToggle() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    setTheme(initialTheme);
+    
+    if (initialTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  if (!mounted) {
+    return (
+      <div className="w-12 h-6 bg-gray-200 rounded-full animate-pulse" />
+    );
+  }
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="relative inline-flex h-6 w-12 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-gray-700"
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+    >
+      <span
+        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+          theme === 'dark' ? 'translate-x-7' : 'translate-x-1'
+        }`}
+      />
+      <span className="sr-only">
+        {theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+      </span>
+    </button>
+  );
+}
+
+export default function Index() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="flex flex-col items-center gap-16 p-8">
+        <div className="absolute top-8 right-8">
+          <ThemeToggle />
+        </div>
+        
+        <header className="flex flex-col items-center gap-9 text-center">
+          <div className="flex items-center gap-4">
+            <div className="h-16 w-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+              <svg
+                className="h-8 w-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
+              </svg>
+            </div>
+            <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100">
+              Welcome to{" "}
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Remix
+              </span>
+            </h1>
+          </div>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
+            A modern, full-stack web framework focused on web standards and modern web app UX.
+            Build better websites with fast page loads, seamless transitions, and resilient UX.
+          </p>
+        </header>
+
+        <nav className="w-full max-w-4xl">
+          <div className="rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm p-8 shadow-xl dark:border-gray-700 dark:bg-gray-800/80">
+            <p className="text-center text-lg font-medium text-gray-700 dark:text-gray-200 mb-8">
+              What would you like to explore?
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {resources.map(({ href, text, icon, description }) => (
+                <a
+                  key={href}
+                  className="group flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-blue-200 hover:bg-blue-50 hover:shadow-md dark:border-gray-600 dark:bg-gray-700 dark:hover:border-blue-400 dark:hover:bg-gray-600"
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <div className="flex-shrink-0 rounded-lg bg-blue-100 p-2 group-hover:bg-blue-200 dark:bg-blue-900 dark:group-hover:bg-blue-800">
+                    {icon}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-700 dark:text-gray-100 dark:group-hover:text-blue-300">
+                      {text}
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                      {description}
+                    </p>
+                  </div>
+                  <svg
+                    className="h-5 w-5 text-gray-400 transition-transform group-hover:translate-x-1 group-hover:text-blue-600 dark:group-hover:text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </div>
+        </nav>
+
+        <footer className="text-center text-sm text-gray-500 dark:text-gray-400">
+          <p>
+            Built with{" "}
+            <span className="text-red-500" aria-label="love">
+              ♥
+            </span>{" "}
+            using Remix, TypeScript, and Tailwind CSS
+          </p>
+        </footer>
+      </div>
+    </div>
+  );
+}
