@@ -29,7 +29,7 @@ def main():
             ("🚀 Axxi Interactive App", "Page title"),
             ("Counter Functions", "Counter section"),
             ("Interactive Controls", "Controls section"),
-            ("Welcome to Axxi", "Initial status message"),
+            ("Welcome to Axxi!", "Initial status message"),
             ("Increment", "Increment button"),
             ("Decrement", "Decrement button"),
             ("Reset", "Reset button"),
@@ -50,38 +50,27 @@ def main():
                 print(f"❌ Missing {description}")
                 all_elements_found = False
         
-        # Check for interactive elements (buttons with onClick handlers)
-        if check_element_exists(html, r'onClick={handle', is_regex=True):
-            print("✅ Counter buttons have onClick handlers")
+        # Check for JavaScript modules
+        if check_element_exists(html, r'type="module"', is_regex=True):
+            print("✅ JavaScript modules are being loaded")
         else:
-            print("❌ Counter buttons missing onClick handlers")
+            print("❌ JavaScript modules are not being loaded")
             all_elements_found = False
             
-        if check_element_exists(html, r'onClick={', is_regex=True):
-            print("✅ Interactive control buttons have onClick handlers")
+        # Check for React components
+        if check_element_exists(html, r'entry.client.tsx', is_regex=True):
+            print("✅ React entry point is being loaded")
         else:
-            print("❌ Interactive control buttons missing onClick handlers")
-            all_elements_found = False
-            
-        # Check for modal dialog
-        if check_element_exists(html, r'showModal', is_regex=True):
-            print("✅ Modal dialog is conditionally rendered")
-        else:
-            print("❌ Modal dialog implementation is missing")
-            all_elements_found = False
-            
-        # Check for theme implementation
-        if check_element_exists(html, r'currentTheme', is_regex=True):
-            print("✅ Theme implementation is present")
-        else:
-            print("❌ Theme implementation is missing")
+            print("❌ React entry point is not being loaded")
             all_elements_found = False
             
         # Final result
         if all_elements_found:
             print("\n✅ All required elements found in the application")
-            print("✅ The application appears to be fully functional")
-            return 0
+            print("✅ The HTML structure appears to be correct")
+            print("⚠️ However, the JavaScript event handlers may not be working correctly")
+            print("⚠️ This means buttons may not respond to clicks")
+            return 1
         else:
             print("\n⚠️ Some elements are missing from the application")
             return 1
