@@ -6,7 +6,7 @@ def main():
     # Since this is a frontend-only application with no backend API,
     # we'll just verify that the frontend is running
     try:
-        response = requests.get("http://localhost:5175")
+        response = requests.get("http://localhost:5174")
         if response.status_code == 200:
             print("✅ Frontend is running successfully")
             return 0
