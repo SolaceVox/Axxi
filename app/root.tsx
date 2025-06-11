@@ -34,25 +34,10 @@ export const links: LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
         <Meta />
         <Links />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                const theme = localStorage.getItem('theme') || 
-                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                if (theme === 'dark') {
-                  document.documentElement.classList.add('dark');
-                }
-              } catch (e) {
-                // Fallback for SSR or localStorage issues
-              }
-            `,
-          }}
-        />
       </head>
       <body className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
         {children}
@@ -74,13 +59,13 @@ export function ErrorBoundary() {
           <Meta />
           <Links />
         </head>
-        <body className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+        <body className="min-h-screen bg-white text-gray-900">
           <div className="flex min-h-screen items-center justify-center">
             <div className="text-center">
               <h1 className="text-4xl font-bold text-red-600 mb-4">
                 {error.status} {error.statusText}
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <p className="text-gray-600 mb-6">
                 {error.data || "Something went wrong"}
               </p>
               <a
@@ -104,13 +89,13 @@ export function ErrorBoundary() {
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+      <body className="min-h-screen bg-white text-gray-900">
         <div className="flex min-h-screen items-center justify-center">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-red-600 mb-4">
               Application Error
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-gray-600 mb-6">
               An unexpected error occurred. Please try again later.
             </p>
             <a
